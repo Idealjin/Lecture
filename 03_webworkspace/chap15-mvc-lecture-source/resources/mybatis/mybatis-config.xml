@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  <configuration>
+  <environments default="dev">
+  <environment id="dev">
+  	<transactionManager type="JDBC"/>
+  	<!-- net.sf.log4jdbc.DriverSpy -->
+  	<!-- oracle.jdbc.driver.OracleDriver -->
+  	<dataSource type="POOLED">
+  		<property name="driver" value="net.sf.log4jdbc.DriverSpy"/>
+  		<property name="url" value="jdbc:log4jdbc:oracle:thin:@oracle_high?TNS_ADMIN=/Volumes/SSDONE/Space/himedia/dev/00_installFiles/Wallet_oracle"/>
+  		<property name="username" value="EMPLOYEE1"/>
+  		<property name="password" value="PLOYEe12341234"/>
+  	</dataSource>
+  </environment>
+  
+  </environments>
+  <mappers>
+  	<package name="com.ohgiraffers.mvc.employee.model.dao"/>
+  </mappers>
+  </configuration>
