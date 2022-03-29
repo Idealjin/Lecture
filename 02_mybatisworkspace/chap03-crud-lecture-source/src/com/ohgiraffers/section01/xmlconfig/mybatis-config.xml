@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+  <typeAliases>
+  	<typeAlias type="com.ohgiraffers.section01.xmlconfig.MenuDTO" alias="MenuDTO"/>
+  </typeAliases>
+
+  <environments default="dev">
+  	<environment id="dev">
+  		<!--  JDBC와 MANAGED 둘 중 하나 선택 가능 -->
+  		<transactionManager type="JDBC"/>
+  		
+  		<dataSource type = "POOLED">
+  			<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+  			<property name="url" value="jdbc:log4jdbc:oracle:thin:@oracle_high?TNS_ADMIN=/Volumes/SSDONE/창고/하이미디어/백엔드/Wallet_oracle"/>
+  			<property name="username" value="OHGIRAFFERS"/>
+  			<property name="password" value="OHGi12341234"/>
+  		</dataSource>
+  	</environment>
+  </environments>
+  
+  
+  <mappers>
+  	<mapper resource="com/ohgiraffers/section01/xmlconfig/menu-mapper.xml"/>
+  </mappers>
+  
+  
+</configuration>
+  
