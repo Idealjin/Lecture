@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<!-- 컨테이너는 bean목록에서 bean을 찾을때 고유한 이름을 사용한다.
+		만약 id 생략시, 클래스명의 앞글자를 소문자로 하는 id를 자동으로 설정한다.
+	
+		클래스 속성은 빈으로 만들 객체의 타입을 풀패키지명으로 작성한다.
+	 -->
+	<bean id="member" class="com.ohgiraffers.section01.xmlconfig.MemberDTO">
+		<constructor-arg index="0" value="1"/>
+		<constructor-arg name="id" value="user01"/>	
+		<constructor-arg index="2">
+			<value>pass01</value>
+		</constructor-arg>
+		<constructor-arg name="name">
+			<value>홍길동</value>
+		</constructor-arg>
+		<!--  위 4가지 방법 아무거나 상관없다. -->
+	</bean>
+	
+</beans>
