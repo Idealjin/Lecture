@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+		  
+
+<!-- context 스키마를 추가해준다. -->
+<context:property-placeholder location="connection-info.properties"/>
+
+<!-- 빈 스캐닝 할 basePackage 설정 -->
+<context:component-scan base-package="com.ohgiraffers.section02.aop.javaconfig"/>
+
+<!-- SqlSessionTemplate 빈 등록 -->
+
+<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+	<constructor-arg ref="sqlSession"/>
+</bean>
+
+<!-- SqlSessuinFactoryBean 빈 등록 -->
+
+<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+<property name="configLocation" value="com/ohgiraffers/section02/aop/javaconfig/config/mybatis-config.xml"/>
+<property name="dataSource" ref="dataSource"/>
+</bean>
+
+<!--  basicDataSouce 빈 등록 -->
+<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+<property name="driverClassName" value="${oracle.dev.driver:oracle.jdbc.driver.OracleDriver}"/>
+<property name="url" value="${oracle.dev.url:jdbc:log4jdbc:oracle:thin:@oracle_high?TNS_ADMIN=/Volumes/SSDONE/Space/himedia/dev/00_installFiles/Wallet_oracle}"/>
+<property name="username" value="${oracle.dev.username:OHGIRAFFERS}"/>
+<property name="password" value="${oracle.dev.password:OHGi12341234}"/>
+<property name="defaultAutoCommit" value="false"/>
+</bean>
+
+<mybatis:scan base-package="com.ohgiraffers.section02.aop.javaconfig.model.dao"/>
+
+<!-- 스프링 트랜젝션 관리용 빈 등록 -->
+<!-- Connection의 트랜젝션 API를 이용해서 트랜잭션을 관리해주는 트랜잭션 매니저이다. -->
+
+<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+
+<property name="dataSource" ref="dataSource"/>
+</bean>
+
+<!--  aop트랜젝션 설정 -->
+<aop:aspectj-autoproxy proxy-target-class="true"/>
+
+<!-- 자바어노테이션으로 설정할 경우 이부분이 xml방식과 다르게 설정이 된다. -->
+<!-- classpath에서 dao모듈 제거해야한다.
+	4.0.0에서 삭제된것 때문에 파싱할때 충돌이 나서 제거해줘야한다.
+ -->
+<tx:annotation-driven transaction-manager="transactionManager"/>
+
+
+</beans>

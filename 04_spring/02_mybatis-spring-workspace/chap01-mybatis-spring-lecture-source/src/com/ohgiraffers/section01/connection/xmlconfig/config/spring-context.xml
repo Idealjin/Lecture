@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+<!-- context 스키마를 추가해준다. -->
+
+<context:property-placeholder location="connection-info.properties"/>
+
+<!-- 빈 스캐닝 할 basePackage 설정 -->
+<context:component-scan base-package="com.ohgiraffers.section01.connection.xmlconfig"/>
+
+<!-- SqlSessionTemplate 빈 등록 -->
+
+<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+	<constructor-arg ref="sqlSession"/>
+</bean>
+
+<!-- SqlSessuinFactoryBean 빈 등록 -->
+
+<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+<property name="configLocation" value="com/ohgiraffers/section01/connection/xmlconfig/config/mybatis-config.xml"/>
+<property name="dataSource" ref="dataSource"/>
+</bean>
+
+<!--  basicDataSouce 빈 등록 -->
+<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+<property name="driverClassName" value="${oracle.dev.driver:oracle.jdbc.driver.OracleDriver}"/>
+<property name="url" value="${oracle.dev.url:jdbc:log4jdbc:oracle:thin:@oracle_high?TNS_ADMIN=/Volumes/SSDONE/Space/himedia/dev/00_installFiles/Wallet_oracle}"/>
+<property name="username" value="${oracle.dev.username:OHGIRAFFERS}"/>
+<property name="password" value="${oracle.dev.password:OHGi12341234}"/>
+<property name="defaultAutoCommit" value="false"/>
+</bean>
+
+
+
+</beans>
