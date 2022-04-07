@@ -3,3 +3,4 @@
 2. Mybatis
 3. Web(Sevlet & JSP)
 4. Spring
+5. ajax
