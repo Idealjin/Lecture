@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1 align="center">javascript ajax</h1>
+	
+	
+	<p>
+	    AJAX는 대화형 웹 응용프로그램을 만들기 위한 웹 개발 기술이다.<br>
+	    기존 웹 애플리케이션은 동기 요청을 사용하여 서버와 정보를 전송한다.<br>
+	    폼 양식을 작성하고 제출을 누르면 서버의 새 정보가 있는 새 페이지로 이동한다는 의미이다.<br>
+	    하지만 AJAX를 사용하면 자바스크립트가 서버에 요청하여 결과를 해석하여 현재 화면을 업데이트 하게된다.<br>
+	    클라이언트는 이러한 화면 갱신 없이 데이터가 서버로 전송되었다는 사실을 알지 못해도 서버 데이터를 수신할 수 있게 된다.<br>
+	    AJAX는 서버 소프트웨어와는 별개의 독립적인 웹 브라우저 기술이며 기술 자체로는 프론트엔드로 분류가 된다.<br>
+	    하지만 서버 전송 이후 back-end와 연동되기 대문에 back-end와 혼동할 수 있다.<br>
+	    자바스크립트는 서버와 비동기 상호작용을 수행하기 위한 XMLHttpRequest 객체를 이용한다.<br>
+	</p>
+	
+	
+	
+	<h3>simple string ajax</h3>
+	<input type="text" name="name" id="param">
+	<button onclick="sendName();">서버로 전송</button>
+	<br>
+	<p id="result">
+	
+	<script>
+		function sendName(){
+			
+			/* HttpRequest를 전송할 수 있는 객체를 생성 */
+			const httpRequest = new XMLHttpRequest();
+			const serverAddress = "/chap01/javascript";
+			
+			httpRequest.onreadystatechange = function(){
+				/* 서버의 응답에 따른 로직을 작성 */
+				if(httpRequest.readyState === XMLHttpRequest.DONE){
+					
+					/*
+					0 : request가 초기화 되지 않음
+					1 : 서버와 연결이 성사됨
+					2 : 서버가 request를 받음
+					3 : request 요청을 처리하는 중
+					4 : request에 대한 처리가 끝났으며 응답할 준비가 완료됨(DONE)
+					*/
+					if(httpRequest.status === 200){
+						/* 응답 상태가 성공인 경우 */
+						document.getElementById('result').innerText = httpRequest.responseText;
+					} else {
+						/* 요구를 처리하는 과정에서 문제가 발생되었다. 
+						   404 or 500에 대한 처리를 주로한다.
+						*/
+					}
+				}
+			}
+			
+			let name = document.getElementById('param').value;
+			/* 요청방식, 요청 url, 비동기방식사용여부(true 기본값) */
+			httpRequest.open('GET', serverAddress + '?name=' + name);
+			
+			httpRequest.send();
+		}
+	</script>
+	
+	
+	
+	
+
+	
+</body>
+</html>
